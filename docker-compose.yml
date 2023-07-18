@@ -1,6 +1,7 @@
 version: '3'
 services:
   db:
+    restart: always
     image: mysql:8.0.22
     container_name: db
     environment:
@@ -10,22 +11,23 @@ services:
       MYSQL_PASSWORD: root
     ports:
       - "3306:3306"
-    volumes:
-      - ./mysql-data:/var/lib/mysql
-      - ./mysql-scripts:/docker-entrypoint-initdb.d
   order-backend:
+    restart: always
     build:
       context: ./
       dockerfile: Dockerfile
     container_name: order-backend
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/order_logistic_db?useSSL=false
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/order_logistic_db?allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Hong_Kong
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.MySQL8Dialect
+      GOOGLE_MAPS_APIKEY: yourGoogleApikey
     depends_on:
       - db
     ports:
       - "8080:8080"
+    dns:
+      - 8.8.8.8
