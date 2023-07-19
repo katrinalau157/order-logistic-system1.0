@@ -1,7 +1,9 @@
 #!/bin/bash
+# start Docker Compose
+docker-compose down
 
-# run Maven command
-#mvn clean install -DskipTests
+# start Docker Compose
+docker image rm order-logistic-system10_order-backend
 
 # start Docker Compose
 docker-compose up
