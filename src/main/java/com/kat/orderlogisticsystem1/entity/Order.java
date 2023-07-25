@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Version;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -48,4 +49,9 @@ public class Order
 	@UpdateTimestamp
 	@Column(name = "LAST_MODIFIED_DATE")
 	private LocalDateTime lastModifiedDate;
+
+	@Version
+	@Column(name = "VERSION")
+	private Long version;
+
 }
